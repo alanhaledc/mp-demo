@@ -1,66 +1,153 @@
-// pages/posts/post-detail/post-detail.js
+const postsData = require('../../../data/posts-data.js');
+
 Page({
+  data: {},
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    const postId = options.id;
+    // 当前id赋值给变量
+    this.setData({
+      currentPostId: postId
+    });
+    const postData = postsData[postId];
+    this.setData(postData);
+
+    // 加载后获取缓存
+    const postsCollected = wx.getStorageSync('posts_collected');
+    if (postsCollected) {
+      const postCollected = postsCollected[postId];
+      // 赋值给变量
+      this.setData({
+        collected: postCollected
+      })
+    } else {
+      const postsCollected = {};
+      // 初始值为false
+      postsCollected[postId] = false;
+      // 存储
+      wx.setStorageSync('posts_collected', postsCollected)
+    }
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   * 收藏
    */
-  onReady: function () {
-  
+  onCollectionTap: function () {
+    // 异步获取收藏缓存
+    // this.getPostsCollectAsync();
+
+    // 同步获取收藏缓存
+    this.getPostsCollectSync();
+
+
   },
 
   /**
-   * 生命周期函数--监听页面显示
+   * 同步获取收藏缓存
    */
-  onShow: function () {
-  
+  getPostsCollectSync: function () {
+    const postsCollected = wx.getStorageSync('posts_collected');
+    let postCollected = postsCollected[this.data.currentPostId];
+    // 取反
+    postCollected = !postCollected;
+    postsCollected[this.data.currentPostId] = postCollected;
+
+    // 交互
+    // 显示模态弹窗 不建议
+    // this.showModel(postsCollected, postCollected);
+
+    // 显示消息提示框
+    this.showToast(postsCollected, postCollected);
   },
 
   /**
-   * 生命周期函数--监听页面隐藏
+   * 异步获取收藏缓存（与同步进行对比，小程序异步用得比较少，容易出问题）
    */
-  onHide: function () {
-  
+  getPostsCollectAsync:function () {
+    const that = this;
+    wx.getStorage({
+      key: 'posts_collected',
+      success: function (res) {
+        const postsCollected = res.data;
+        let postCollected = postsCollected[that.data.currentPostId];
+        postCollected = !postCollected;
+        postsCollected[that.data.currentPostId] = postCollected;
+        that.showToast(postsCollected, postCollected);
+      }
+    })
   },
 
   /**
-   * 生命周期函数--监听页面卸载
+   * 分析
    */
-  onUnload: function () {
-  
+  onShareTap: function () {
+    this.showActionSheet();
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
+   * 显示操作菜单
    */
-  onPullDownRefresh: function () {
-  
+  showActionSheet: function () {
+    const itemList = [
+      '分享给微信好友',
+      '分享到朋友圈',
+      '分享到QQ',
+      '分享到微博',
+    ];
+    wx.showActionSheet({
+      itemList: itemList,
+      itemColor: '#405f80',
+      success: function (res) {
+        wx.showModal({
+          title: `用户${itemList[res.tapIndex]}`,
+          content: '现在小程序无法实现分享功能，什么时候能支持呢？'
+        })
+      }
+    })
   },
 
   /**
-   * 页面上拉触底事件的处理函数
+   * 显示消息提示框
    */
-  onReachBottom: function () {
-  
+  showToast: function (postsCollected, postCollected) {
+    // 更新缓存
+    wx.setStorageSync('posts_collected', postsCollected);
+    // 更新变量数据
+    this.setData({
+      collected: postCollected
+    });
+    wx.showToast({
+      title: postCollected ? '收藏成功' : '取消成功',
+      duration: 500,
+    })
   },
 
   /**
-   * 用户点击右上角分享
+   * 显示模态弹窗
+   * @param postsCollected
+   * @param postCollected
    */
-  onShareAppMessage: function () {
-  
+  showModel: function (postsCollected, postCollected) {
+    const that = this;
+    wx.showModal({
+      title: '收藏',
+      content: postCollected ? '是否收藏该文章':'是否取消收藏该文章',
+      showCancel: 'true',
+      cancelText: '取消',
+      cancelColor: '#333',
+      confirmText: '确认',
+      confirmColor: '#405f80',
+      success: function (res) {
+        if (res.confirm) {
+          // 更新缓存
+          wx.setStorageSync('posts_collected', postsCollected);
+
+          // 更新变量数据 注意this指向
+          that.setData({
+            collected: postCollected
+          })
+        }
+      }
+    })
   }
-})
+});
