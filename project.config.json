@@ -12,7 +12,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.98",
-	"appid": "wx3a0ca6652cc489dd",
+	"appid": "",
 	"projectname": "mp-demo",
 	"isGameTourist": false,
 	"condition": {
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
@@ -44,7 +44,8 @@
 				{
 					"id": -1,
 					"name": "post-detail",
-					"pathName": "pages/posts/post-detail/post-detail"
+					"pathName": "pages/posts/post-detail/post-detail",
+					"query": ""
 				}
 			]
 		}
