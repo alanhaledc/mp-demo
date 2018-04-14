@@ -5,26 +5,29 @@ const app = getApp();
 Page({
   data: {
     isPlaying: false,
-    currentPostId: null
+    currentPostId: null,
+    postData: {}
   },
 
   onLoad: function (options) {
+    // 获取从路由中传来的id值
     const postId = options.id;
 
-    // 当前id赋值给变量
+    // id赋值给变量
     this.setData({
       currentPostId: postId
     });
-    const postData = postsData[postId];
+
+    // 通过id值取得对应数据
+    const postData = postsData.postList[postId];
     this.setData({
       postData: postData
     });
-    console.log(this.data);
 
+    // 初始化收藏状态 获取缓存数据
     this.initPostsCollected(postId);
 
-
-    // 全局变量在退出页面时保留原页面的状态
+    // 把当前页面的播放状态和id保存到全局变量中， 不会因为退出当前页面而丢失
     if (app.globalData.g_isPlaying && app.globalData.g_currentPostId === postId) {
       this.setData({
         isPlaying: true
@@ -41,10 +44,10 @@ Page({
     // 加载后获取缓存
     const postsCollected = wx.getStorageSync('posts_collected');
     if (postsCollected) {
-      const postCollected = postsCollected[postId];
+      const isPostCollected = postsCollected[postId];
       // 赋值给变量
       this.setData({
-        collected: postCollected
+        isCollected: isPostCollected
       })
     } else {
       const postsCollected = {};
@@ -67,6 +70,7 @@ Page({
       that.setData({
         isPlaying: true,
       });
+      // 更新全局变量数据
       app.globalData.g_isPlaying = true;
       app.globalData.g_currentPostId = that.data.currentPostId;
     });
@@ -76,6 +80,7 @@ Page({
       that.setData({
         isPlaying: false
       });
+      // 更新全局变量数据
       app.globalData.g_isPlaying = false;
       app.globalData.g_currentPostId = null;
     });
@@ -85,6 +90,7 @@ Page({
       that.setData({
         isPlaying: false
       });
+      // 更新全局变量数据
       app.globalData.g_isPlaying = false;
       app.globalData.g_currentPostId = null;
     })
@@ -96,7 +102,7 @@ Page({
   onMusicTop: function () {
     let isPlaying = this.data.isPlaying;
     const currentPostId = this.data.currentPostId;
-    const postData = postsData[currentPostId];
+    const postData = postsData.postList[currentPostId];
     if (isPlaying) {
       wx.pauseBackgroundAudio();
       this.setData({
@@ -116,7 +122,7 @@ Page({
   },
 
   /**
-   * 收藏
+   * 收藏文章或取消收藏
    */
   onCollectionTap: function () {
     // 异步获取收藏缓存
@@ -133,17 +139,19 @@ Page({
    */
   getPostsCollectSync: function () {
     const postsCollected = wx.getStorageSync('posts_collected');
-    let postCollected = postsCollected[this.data.currentPostId];
-    // 取反
-    postCollected = !postCollected;
-    postsCollected[this.data.currentPostId] = postCollected;
+    // 取得当前页面文章收藏数据(是否收藏)
+    let isPostCollected = postsCollected[this.data.currentPostId];
+    // 点击后需要取反(收藏变不收藏，不收藏变收藏)
+    isPostCollected = !isPostCollected;
+    // 更新点击后的收藏状态
+    postsCollected[this.data.currentPostId] = isPostCollected;
 
     // 交互
     // 显示模态弹窗 不建议
     // this.showModel(postsCollected, postCollected);
 
     // 显示消息提示框
-    this.showToast(postsCollected, postCollected);
+    this.showToast(postsCollected, isPostCollected);
   },
 
   /**
@@ -164,14 +172,14 @@ Page({
   },
 
   /**
-   * 分析
+   * 分享文章
    */
   onShareTap: function () {
     this.showActionSheet();
   },
 
   /**
-   * 显示操作菜单
+   * 显示分享操作菜单
    */
   showActionSheet: function () {
     const itemList = [
@@ -195,29 +203,30 @@ Page({
   /**
    * 显示消息提示框
    */
-  showToast: function (postsCollected, postCollected) {
-    // 更新缓存
+  showToast: function (postsCollected, isPostCollected) {
+    // 同时更新缓存
     wx.setStorageSync('posts_collected', postsCollected);
-    // 更新变量数据
+    // 同时更新收藏数据
     this.setData({
-      collected: postCollected
+      isCollected: isPostCollected
     });
+    // 根据收藏状态提示消息
     wx.showToast({
-      title: postCollected ? '收藏成功' : '取消成功',
+      title: isPostCollected ? '收藏成功' : '取消成功',
       duration: 500,
     })
   },
 
   /**
-   * 显示模态弹窗
+   * 显示模态弹窗 (和消息提示框对比)
    * @param postsCollected
    * @param postCollected
    */
-  showModel: function (postsCollected, postCollected) {
+  showModel: function (postsCollected, isPostCollected) {
     const that = this;
     wx.showModal({
       title: '收藏',
-      content: postCollected ? '是否收藏该文章' : '是否取消收藏该文章',
+      content: isPostCollected ? '是否收藏该文章' : '是否取消收藏该文章',
       showCancel: 'true',
       cancelText: '取消',
       cancelColor: '#333',
@@ -230,7 +239,7 @@ Page({
 
           // 更新变量数据 注意this指向
           that.setData({
-            collected: postCollected
+            isCollected: isPostCollected
           })
         }
       }
