@@ -2,6 +2,7 @@
 <template name="movieListTemplate">
   <view class="movie-list-container">
     <view class="inner-container">
+      <!--电影列表头部-->
       <view class="movie-head">
         <text class="slogan">{{type}}</text>
         <view catchtap="onMoreTap" class="more" data-type="{{type}}">
@@ -9,6 +10,7 @@
           <image class="more-img" src="/images/icon/arrow-right.png"/>
         </view>
       </view>
+      <!--电影列表内容-->
       <view class="movies-container">
         <block wx:for="{{movies}}" wx:for-item="movie" wx:key="movie">
           <template is="movieTemplate" data="{{...movie}}"/>

@@ -53,7 +53,6 @@ Page({
     let movies = [];
     let subject;
     let title;
-    let temp;
 
     for (let key in data.subjects) {
       subject = data.subjects[key];
@@ -61,7 +60,7 @@ Page({
       if (title.length >= 0) {
         title = title.substring(0, 6) + '...'
       }
-      temp = {
+      let temp = {
         // 转化星星数为数组
         stars: util.formateStars(subject.rating.stars),
         title: title,
@@ -73,7 +72,7 @@ Page({
     }
     let readyData = {};
     readyData[keystr] = {
-      // 三种类型对象下面设置成相同的key值，在movies用扩展符展开，然后在movie-list遍历时名字都是movies
+      // 三种类型对象下面设置成相同的key值-movies，在movies用扩展符展开，然后在movie-list遍历时名字都是movies
       movies: movies,
       type: type
     };
@@ -105,7 +104,7 @@ Page({
    * 搜索输入聚焦触发
    * @param e
    */
-  onBindFocus: function (e) {
+  onBindFocus: function () {
     this.setData({
       isContainerShow: false,
       isSearchPanelShow: true
@@ -130,7 +129,7 @@ Page({
     this.setData({
       isContainerShow: true,
       isSearchPanelShow: false,
-      // 清空搜索数据
+      // 同时清空搜索数据
       searchResult: {}
     })
   }

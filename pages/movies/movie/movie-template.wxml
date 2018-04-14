@@ -1,8 +1,11 @@
 <import src="/pages/movies/stars/stars-template.wxml"/>
 <template name="movieTemplate">
   <view class="movie-container" catchtap="onMovieTap" data-movieId="{{movieId}}">
+    <!--电影海报-->
     <image class="movie-img" src="{{coverageUrl}}"/>
+    <!--电影名字-->
     <text class="movie-title">{{title}}</text>
+    <!--电影评分-->
     <template is="starsTemplate" data="{{stars:stars, score:average}}"/>
   </view>
 </template>

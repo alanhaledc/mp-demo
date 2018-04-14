@@ -12,10 +12,14 @@ Page({
 
   onLoad: function (options) {
     const type = options.type;
+
+    // 动态设置导航栏标题
     wx.setNavigationBarTitle({
       title: type
     });
     let dataUrl = '';
+
+    // 根据标题构建请求url
     switch (type) {
       case '正在热映':
         dataUrl = `${doubanBase}/v2/movie/in_theaters`;
@@ -35,7 +39,7 @@ Page({
   },
 
   /**
-   * 页面上拉触底事件的处理函数
+   * 页面上拉触底事件的处理函数(页面下拉刷新和组件scroll-view冲突，加载更多改用事件触发)
    */
   onReachBottom: function () {
     this.onScrollLower()
@@ -75,7 +79,6 @@ Page({
     if (!this.data.isEmpty) {
       // concat 不改变原对象
       totalMovies = this.data.movies.concat(movies)
-      // totalMovies = Object.assign(this.data.movies, movies)
     } else {
       totalMovies = movies;
       this.setData({
@@ -87,22 +90,22 @@ Page({
       totalCount: that.data.totalCount + 20
     });
 
-    // 隐藏导航条加载动画
+    // 数据加载成功后隐藏导航条加载动画
     wx.hideNavigationBarLoading()
   },
 
   /**
-   * 滚动到底部加载数据
+   * 滚动到底部时加载更多数据
    */
   onScrollLower: function () {
     let nextUrl = `${this.data.requestUrl}?start=${this.data.totalCount}&count=20`;
     util.http(nextUrl, this.processDoubanData);
-    // 在当前页面显示导航条加载动画
+    // 加载数据时在当前页面显示导航条加载动画
     wx.showNavigationBarLoading();
   },
 
   /**
-   * 下拉刷新调用函数
+   * 下拉刷新调用函数(同时显示下拉动画)
    */
   onPullDownRefresh: function () {
     let refreshUrl = `${this.data.requestUrl}?start=0&count=20`;
@@ -112,7 +115,7 @@ Page({
       isEmpty: true
     });
     util.http(refreshUrl, this.processDoubanData);
-    // 请求后停止下拉动画
+    // 请求数据成功后停止下拉动画
     wx.stopPullDownRefresh()
   },
 

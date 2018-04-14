@@ -18,6 +18,7 @@ Page({
    * @param data
    */
   processDoubanData: function (data) {
+    // 导演字段处理
     let director = {
       avatar: '',
       name: '',
@@ -50,14 +51,13 @@ Page({
       summary: data.summary ? data.summary : '暂无简介'
     };
 
-    console.log(movie);
     this.setData({
       movie: movie
     })
   },
 
   /**
-   * 图片预览
+   * 图片预览(电影海报和影人)
    * @param e
    */
   viewMoviePostImg: function (e) {

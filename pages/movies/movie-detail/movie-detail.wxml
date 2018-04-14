@@ -1,6 +1,8 @@
 <import src="/pages/movies/stars/stars-template.wxml"/>
 <view class="container">
+  <!--电影头部海报(模糊效果)-->
   <image class="head-img" src="{{movie.movieImg}}" mode="aspectFill"></image>
+  <!--电影头部海报上面的内容(覆盖在上面)-->
   <view class="head-img-hover">
     <text class="main-title">{{movie.title}}</text>
     <text class="sub-title">{{movie.country + '.' + movie.year}}</text>
@@ -11,7 +13,9 @@
       <text class="plain-font">人评论</text>
     </view>
   </view>
+  <!--电影海报(清晰)-->
   <image class="movie-img" src="{{movie.movieImg}}" data-src="{{movie.movieImg}}" catchtap="viewMoviePostImg"/>
+  <!--电影相关内容-->
   <view class="summary">
     <view class="original-title">{{movie.originalTitle}}</view>
     <view class="flex-row">
@@ -31,12 +35,16 @@
       <text>{{movie.genres}}</text>
     </view>
   </view>
+  <!--分割线-->
   <view class="hr"/>
+  <!--电影剧情简介-->
   <view class="synopsis">
     <text class="synopsis-font">剧情简介</text>
     <text class="summary-content">{{movie.summary}}</text>
   </view>
+  <!--分割线-->
   <view class="hr"></view>
+  <!--影人展示-->
   <view class="cast">
     <text class="cast-font">影人</text>
     <scroll-view class="cast-imgs"  scroll-x="true" style="width: 100%">
