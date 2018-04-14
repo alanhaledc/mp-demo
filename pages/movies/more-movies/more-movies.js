@@ -114,6 +114,16 @@ Page({
     util.http(refreshUrl, this.processDoubanData);
     // 请求后停止下拉动画
     wx.stopPullDownRefresh()
-  }
+  },
+
+  /**
+   * 跳转到电影详情页
+   */
+  onMovieTap: function (e) {
+    const movieId = e.currentTarget.dataset.movieid;
+    wx.navigateTo({
+      url: `/pages/movies/movie-detail/movie-detail?id=${movieId}`
+    })
+  },
 
 });

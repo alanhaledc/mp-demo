@@ -32,6 +32,5 @@ page {
 }
 
 .moto {
-  font-size: 24rpx;
   font-weight: bold;
 }

@@ -1,17 +1,43 @@
 const postsData = require('../../../data/posts-data.js');
+// 获取全局App
+const app = getApp();
 
 Page({
-  data: {},
+  data: {
+    isPlaying: false,
+    currentPostId: null
+  },
 
   onLoad: function (options) {
     const postId = options.id;
+
     // 当前id赋值给变量
     this.setData({
       currentPostId: postId
     });
     const postData = postsData[postId];
-    this.setData(postData);
+    this.setData({
+      postData: postData
+    });
+    console.log(this.data);
 
+    this.initPostsCollected(postId);
+
+
+    // 全局变量在退出页面时保留原页面的状态
+    if (app.globalData.g_isPlaying && app.globalData.g_currentPostId === postId) {
+      this.setData({
+        isPlaying: true
+      })
+    }
+
+    this.setAudioMonitor();
+  },
+
+  /**
+   * 初始化收藏状态 获取缓存数据
+   */
+  initPostsCollected: function (postId) {
     // 加载后获取缓存
     const postsCollected = wx.getStorageSync('posts_collected');
     if (postsCollected) {
@@ -27,6 +53,66 @@ Page({
       // 存储
       wx.setStorageSync('posts_collected', postsCollected)
     }
+  },
+
+  /**
+   * 监听音乐播放状态
+   */
+  setAudioMonitor: function () {
+    const that = this;
+
+    // 公共开关和页面开关同步
+    // 监听音乐播放
+    wx.onBackgroundAudioPlay(function () {
+      that.setData({
+        isPlaying: true,
+      });
+      app.globalData.g_isPlaying = true;
+      app.globalData.g_currentPostId = that.data.currentPostId;
+    });
+
+    // 监听音乐暂停
+    wx.onBackgroundAudioPause(function () {
+      that.setData({
+        isPlaying: false
+      });
+      app.globalData.g_isPlaying = false;
+      app.globalData.g_currentPostId = null;
+    });
+
+    // 监听音乐停止
+    wx.onBackgroundAudioStop(function () {
+      that.setData({
+        isPlaying: false
+      });
+      app.globalData.g_isPlaying = false;
+      app.globalData.g_currentPostId = null;
+    })
+  },
+
+  /**
+   * 播放音乐
+   */
+  onMusicTop: function () {
+    let isPlaying = this.data.isPlaying;
+    const currentPostId = this.data.currentPostId;
+    const postData = postsData[currentPostId];
+    if (isPlaying) {
+      wx.pauseBackgroundAudio();
+      this.setData({
+        isPlaying: false
+      })
+    } else {
+      wx.playBackgroundAudio({
+        dataUrl: postData.music.url,
+        title: postData.music.title,
+        coverImgUrl: postData.music.coverImg
+      });
+      this.setData({
+        isPlaying: true
+      })
+    }
+
   },
 
   /**
@@ -63,7 +149,7 @@ Page({
   /**
    * 异步获取收藏缓存（与同步进行对比，小程序异步用得比较少，容易出问题）
    */
-  getPostsCollectAsync:function () {
+  getPostsCollectAsync: function () {
     const that = this;
     wx.getStorage({
       key: 'posts_collected',
@@ -131,7 +217,7 @@ Page({
     const that = this;
     wx.showModal({
       title: '收藏',
-      content: postCollected ? '是否收藏该文章':'是否取消收藏该文章',
+      content: postCollected ? '是否收藏该文章' : '是否取消收藏该文章',
       showCancel: 'true',
       cancelText: '取消',
       cancelColor: '#333',

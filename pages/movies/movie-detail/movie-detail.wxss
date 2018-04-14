@@ -1,0 +1,145 @@
+@import "/pages/movies/stars/stars-template.wxss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.head-img {
+  width: 100%;
+  height: 320rpx;
+  filter: blur(20px);
+}
+
+.head-img-hover {
+  width: 100%;
+  height: 320rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-title {
+  font-size: 19px;
+  color: #fff;
+  font-weight: bold;
+  margin: 50rpx 0 0 40rpx;
+  letter-spacing: 2px;
+}
+
+.sub-title {
+  font-size: 28rpx;
+  color: #fff;
+  margin: 30rpx 0 0 40rpx;
+}
+
+.like {
+  display: flex;
+  flex-direction: row;
+  margin: 30rpx 0 0 40rpx;
+}
+
+.highlight-font {
+  color: #f21146;
+  font-size: 22rpx;
+  margin-right: 10rpx;
+}
+
+.plain-font {
+  color: #666;
+  font-size: 22rpx;
+  margin-right: 30rpx;
+}
+
+.movie-img {
+  width: 175rpx;
+  height: 238rpx;
+  position: absolute;
+  top: 160rpx;
+  right: 30rpx;
+}
+
+.summary {
+  margin: 40px 0 0 40px;
+  color: #777;
+}
+
+.original-title {
+  color: #1f3463;
+  font-size: 24rpx;
+  font-weight: bold;
+  margin-bottom: 40rpx;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10rpx;
+}
+
+.mark {
+  margin-right: 30rpx;
+  /*文本不换行*/
+  white-space: nowrap;
+  color: #999;
+}
+
+.hr {
+  margin-top: 45rpx;
+  width: 100%;
+  height: 1px;
+  background-color: #d9d9d9;
+}
+
+.synopsis {
+  margin: 50rpx 0 0 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.synopsis-font {
+  color: #999;
+}
+
+.summary-content {
+  margin: 20rpx 40rpx 0 0 ;
+  line-height: 40rpx;
+  letter-spacing: 1px;
+}
+
+.cast {
+  margin: 50rpx 0 0 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.cast-font {
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.cast-container {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0 40rpx 50rpx 0;
+  width: 170rpx;
+  /* 第二行名字居中 */
+  text-align: center;
+  /* 影人名字长可以换行 */
+  white-space: normal;
+}
+
+.cast-imgs {
+  white-space: nowrap;
+}
+
+.cast-img {
+  width: 179rpx;
+  height: 220rpx;
+}
+
+.cast-name {
+  margin: 10rpx auto 0;
+}

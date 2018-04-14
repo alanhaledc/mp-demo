@@ -6,13 +6,8 @@ Page({
   },
 
   onTap: () => {
-    console.log(1)
-    // wx.navigateTo({
-    //   url: '/pages/posts/posts',
-    // })
-    
-    wx.redirectTo({
-      url: '/pages/posts/posts',
-    })
+    wx.switchTab({
+      url: '/pages/movies/movies'
+    });
   }
-})
+});
