@@ -14,12 +14,6 @@
         <image src="{{item.imgSrc}}" data-postId="{{item.postId}}"></image>
       </swiper-item>
     </block>
-    <!--<swiper-item>-->
-    <!--<image src="/images/vr.png" data-postId="4"></image>-->
-    <!--</swiper-item>-->
-    <!--<swiper-item>-->
-    <!--<image src="/images/iqiyi.png" data-postId="5"></image>-->
-    <!--</swiper-item>    -->
   </swiper>
   <!--文章列表-->
   <block wx:for="{{postList}}" wx:key="postItem">
