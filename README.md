@@ -1,2 +1,3 @@
-## Mini Program
+# mp-demo
 
+> a mini program
