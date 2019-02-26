@@ -1,4 +1,4 @@
-@import "/pages/movies/movie/movie-template.wxss";
+@import '/pages/movies/movie/movie-template.wxss';
 
 .movie-list-container {
   display: flex;
@@ -12,13 +12,13 @@
 
 .movie-head {
   margin: 30rpx 20rpx 22rpx;
-  //display: flex;
-  //justify-content: space-between;
+  /* display: flex; */
+  /* justify-content: space-between; */
 }
 
 .slogan {
   font-size: 24rpx;
-  //margin-top: 14rpx;
+  /* margin-top: 14rpx; */
 }
 
 .more {
@@ -28,7 +28,7 @@
 .more-text {
   vertical-align: middle;
   margin-right: 10rpx;
-  color: #1f4ba5
+  color: #1f4ba5;
 }
 
 .more-img {

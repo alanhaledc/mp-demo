@@ -1,25 +1,19 @@
 <!-- <import src="/pages/posts/post-item/post-item-template.wxml"/> -->
-<import src="post-item/post-item-template.wxml"/>
+<import src="post-item/post-item-template.wxml" />
 <view>
-  <!--轮播图-->
-  <swiper catchtap="onSwiperTap"
-          indicator-dots="333"
-          indicator-active-color="#fff"
-          autoplay="true"
-          interval="2000"
-          circular="true"
-          vertical="{{false}}">
+  <!-- 轮播图 -->
+  <swiper catchtap="onSwiperTap" indicator-dots="333" indicator-active-color="#fff" autoplay="true" interval="2000" circular="true" vertical="{{false}}">
     <block wx:for="{{swiperList}}" wx:key="swiperItem">
       <swiper-item>
         <image src="{{item.imgSrc}}" data-postId="{{item.postId}}"></image>
       </swiper-item>
     </block>
   </swiper>
-  <!--文章列表-->
+  <!-- 文章列表 -->
   <block wx:for="{{postList}}" wx:key="postItem">
     <!-- template -->
     <view catchtap="onPostTap" data-postId="{{item.postId}}">
-      <template is="postItem" data="{{...item}}"/>
+      <template is="postItem" data="{{...item}}" />
     </view>
   </block>
 </view>

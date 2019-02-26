@@ -1,14 +1,14 @@
-const util = require('../../../utils/util.js');
-const app = getApp();
-const doubanBase = app.globalData.g_doubanBase;
+const util = require('../../../utils/util.js')
+const app = getApp()
+const doubanBase = app.globalData.g_doubanBase
 
 Page({
   data: {
     movie: {}
   },
 
-  onLoad: function (options) {
-    const movieId = options.id;
+  onLoad: function(options) {
+    const movieId = options.id
     const detailUrl = `${doubanBase}/v2/movie/subject/${movieId}`
     util.http(detailUrl, this.processDoubanData)
   },
@@ -17,19 +17,19 @@ Page({
    * 提取数据
    * @param data
    */
-  processDoubanData: function (data) {
+  processDoubanData: function(data) {
     // 导演字段处理
     let director = {
       avatar: '',
-      name: '',
+      name: ''
       // id:''
-    };
+    }
 
     if (data.directors[0] !== null) {
       if (data.directors[0].avatar !== null) {
         director.avatar = data.directors[0].avatars.large
       }
-      director.name = data.directors[0].name;
+      director.name = data.directors[0].name
       // director.id = data.directors[0].id
     }
 
@@ -44,12 +44,12 @@ Page({
       commentCount: data.comments_count,
       year: data.year,
       genres: data.genres.join('、'),
-      stars: util.formateStars(data.rating.stars),
+      stars: util.formatStars(data.rating.stars),
       score: data.rating.average,
-      casts: util.formateCasts(data.casts),
-      castsInfo: util.formateCastsInfo(data.casts),
+      casts: util.formatCasts(data.casts),
+      castsInfo: util.formatCastsInfo(data.casts),
       summary: data.summary ? data.summary : '暂无简介'
-    };
+    }
 
     this.setData({
       movie: movie
@@ -60,11 +60,11 @@ Page({
    * 图片预览(电影海报和影人)
    * @param e
    */
-  viewMoviePostImg: function (e) {
-    const url = e.currentTarget.dataset.src;
+  viewMoviePostImg: function(e) {
+    const url = e.currentTarget.dataset.src
     wx.previewImage({
       current: url,
       urls: [url]
     })
   }
-});
+})

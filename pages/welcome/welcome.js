@@ -1,13 +1,10 @@
 // pages/welcome/welcome.js
 Page({
-
-  data: {
-
-  },
+  data: {},
 
   onTap: () => {
     wx.switchTab({
       url: '/pages/movies/movies'
-    });
+    })
   }
-});
+})

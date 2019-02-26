@@ -1,4 +1,4 @@
-<import src="/pages/movies/stars/stars-template.wxml"/>
+<import src="/pages/movies/stars/stars-template.wxml" />
 <view class="container">
   <!--电影头部海报(模糊效果)-->
   <image class="head-img" src="{{movie.movieImg}}" mode="aspectFill"></image>
@@ -14,13 +14,13 @@
     </view>
   </view>
   <!--电影海报(清晰)-->
-  <image class="movie-img" src="{{movie.movieImg}}" data-src="{{movie.movieImg}}" catchtap="viewMoviePostImg"/>
+  <image class="movie-img" src="{{movie.movieImg}}" data-src="{{movie.movieImg}}" catchtap="viewMoviePostImg" />
   <!--电影相关内容-->
   <view class="summary">
     <view class="original-title">{{movie.originalTitle}}</view>
     <view class="flex-row">
       <text class="mark">评分</text>
-      <template is="starsTemplate" data="{{stars: movie.stars, score: movie.score}}"/>
+      <template is="starsTemplate" data="{{stars: movie.stars, score: movie.score}}" />
     </view>
     <view class="flex-row">
       <text class="mark">导演</text>
@@ -36,7 +36,7 @@
     </view>
   </view>
   <!--分割线-->
-  <view class="hr"/>
+  <view class="hr" />
   <!--电影剧情简介-->
   <view class="synopsis">
     <text class="synopsis-font">剧情简介</text>
@@ -47,10 +47,10 @@
   <!--影人展示-->
   <view class="cast">
     <text class="cast-font">影人</text>
-    <scroll-view class="cast-imgs"  scroll-x="true" style="width: 100%">
+    <scroll-view class="cast-imgs" scroll-x="true" style="width: 100%">
       <block wx:for="{{movie.castsInfo}}">
         <view class="cast-container">
-          <image class="cast-img" src="{{item.avatar}}" data-src="{{item.avatar}}" catchtap="viewMoviePostImg"/>
+          <image class="cast-img" src="{{item.avatar}}" data-src="{{item.avatar}}" catchtap="viewMoviePostImg" />
           <text class="cast-name">{{item.name}}</text>
         </view>
       </block>

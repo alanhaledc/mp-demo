@@ -104,7 +104,7 @@
 }
 
 .summary-content {
-  margin: 20rpx 40rpx 0 0 ;
+  margin: 20rpx 40rpx 0 0;
   line-height: 40rpx;
   letter-spacing: 1px;
 }

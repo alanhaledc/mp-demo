@@ -7,6 +7,7 @@
     "pages/movies/more-movies/more-movies",
     "pages/movies/movie-detail/movie-detail"
   ],
+  "requiredBackgroundModes": ["audio"],
   "window": {
     "navigationBarBackgroundColor": "#405f80"
   },
