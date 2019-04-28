@@ -7,7 +7,9 @@
     "pages/movies/more-movies/more-movies",
     "pages/movies/movie-detail/movie-detail"
   ],
-  "requiredBackgroundModes": ["audio"],
+  "requiredBackgroundModes": [
+    "audio"
+  ],
   "window": {
     "navigationBarBackgroundColor": "#405f80"
   },
@@ -28,5 +30,6 @@
         "selectedIconPath": "/images/tab/yuedu_hl.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
