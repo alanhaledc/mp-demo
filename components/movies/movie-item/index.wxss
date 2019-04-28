@@ -1,4 +1,4 @@
-@import '/pages/movies/stars/stars-template.wxss';
+@import '/components/movies/stars/index.wxss';
 
 .movie-container {
   display: flex;

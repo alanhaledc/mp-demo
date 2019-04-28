@@ -9,16 +9,16 @@ Page({
     postData: {}
   },
 
-  onLoad: function(options) {
-    // 获取从路由中传来的id值
+  onLoad(options) {
+    // 获取从路由中传来的 id 值
     const postId = options.id
 
-    // id赋值给变量
+    // id 赋值给变量
     this.setData({
       currentPostId: postId
     })
 
-    // 通过id值取得对应数据
+    // 通过 id 值取得对应数据
     const postData = postsData.postList[postId]
     this.setData({
       postData: postData
@@ -27,7 +27,7 @@ Page({
     // 初始化收藏状态 获取缓存数据
     this.initPostsCollected(postId)
 
-    // 把当前页面的播放状态和id保存到全局变量中， 不会因为退出当前页面而丢失
+    // 把当前页面的播放状态和id保存到全局变量中，不会因为退出当前页面而丢失
     if (
       app.globalData.g_isPlaying &&
       app.globalData.g_currentPostId === postId
@@ -43,10 +43,11 @@ Page({
   /**
    * 初始化收藏状态 获取缓存数据
    */
-  initPostsCollected: function(postId) {
+  initPostsCollected(postId) {
     // 加载后获取缓存
     const postsCollected = wx.getStorageSync('posts_collected')
-    if (postsCollected) {
+
+    if (postsCollected && postsCollected[postId]) {
       const isPostCollected = postsCollected[postId]
       // 赋值给变量
       this.setData({
@@ -54,8 +55,10 @@ Page({
       })
     } else {
       const postsCollected = {}
-      // 初始值为false
+
+      // 初始值为 false
       postsCollected[postId] = false
+
       // 存储
       wx.setStorageSync('posts_collected', postsCollected)
     }
@@ -64,35 +67,36 @@ Page({
   /**
    * 监听音乐播放状态
    */
-  setAudioMonitor: function() {
-    const that = this
-
+  setAudioMonitor() {
     // 公共开关和页面开关同步
     // 监听音乐播放
-    wx.onBackgroundAudioPlay(function() {
-      that.setData({
+    wx.onBackgroundAudioPlay(() => {
+      this.setData({
         isPlaying: true
       })
+
       // 更新全局变量数据
       app.globalData.g_isPlaying = true
-      app.globalData.g_currentPostId = that.data.currentPostId
+      app.globalData.g_currentPostId = this.data.currentPostId
     })
 
     // 监听音乐暂停
-    wx.onBackgroundAudioPause(function() {
-      that.setData({
+    wx.onBackgroundAudioPause(() => {
+      this.setData({
         isPlaying: false
       })
+
       // 更新全局变量数据
       app.globalData.g_isPlaying = false
       app.globalData.g_currentPostId = null
     })
 
     // 监听音乐停止
-    wx.onBackgroundAudioStop(function() {
-      that.setData({
+    wx.onBackgroundAudioStop(() => {
+      this.setData({
         isPlaying: false
       })
+
       // 更新全局变量数据
       app.globalData.g_isPlaying = false
       app.globalData.g_currentPostId = null
@@ -102,7 +106,7 @@ Page({
   /**
    * 播放音乐
    */
-  onMusicTop: function() {
+  playMusic() {
     let isPlaying = this.data.isPlaying
     const currentPostId = this.data.currentPostId
     const postData = postsData.postList[currentPostId]
@@ -124,25 +128,17 @@ Page({
   },
 
   /**
-   * 收藏文章或取消收藏
+   * 设置文章收藏状态
    */
-  onCollectionTap: function() {
-    // 异步获取收藏缓存
-    // this.getPostsCollectAsync();
-
-    // 同步获取收藏缓存
-    this.getPostsCollectSync()
-  },
-
-  /**
-   * 同步获取收藏缓存
-   */
-  getPostsCollectSync: function() {
+  setPostCollection() {
     const postsCollected = wx.getStorageSync('posts_collected')
+
     // 取得当前页面文章收藏数据(是否收藏)
     let isPostCollected = postsCollected[this.data.currentPostId]
+
     // 点击后需要取反(收藏变不收藏，不收藏变收藏)
     isPostCollected = !isPostCollected
+
     // 更新点击后的收藏状态
     postsCollected[this.data.currentPostId] = isPostCollected
 
@@ -155,18 +151,18 @@ Page({
   },
 
   /**
+   * 设置文章收藏状态
    * 异步获取收藏缓存（与同步进行对比，小程序异步用得比较少，容易出问题）
    */
-  getPostsCollectAsync: function() {
-    const that = this
+  setPostCollectionAsync() {
     wx.getStorage({
       key: 'posts_collected',
-      success: function(res) {
+      success: res => {
         const postsCollected = res.data
-        let postCollected = postsCollected[that.data.currentPostId]
+        let postCollected = postsCollected[this.data.currentPostId]
         postCollected = !postCollected
-        postsCollected[that.data.currentPostId] = postCollected
-        that.showToast(postsCollected, postCollected)
+        postsCollected[this.data.currentPostId] = postCollected
+        this.showToast(postsCollected, postCollected)
       }
     })
   },
@@ -174,14 +170,14 @@ Page({
   /**
    * 分享文章
    */
-  onShareTap: function() {
+  showPost() {
     this.showActionSheet()
   },
 
   /**
    * 显示分享操作菜单
    */
-  showActionSheet: function() {
+  showActionSheet() {
     const itemList = [
       '分享给微信好友',
       '分享到朋友圈',
@@ -203,7 +199,7 @@ Page({
   /**
    * 显示消息提示框
    */
-  showToast: function(postsCollected, isPostCollected) {
+  showToast(postsCollected, isPostCollected) {
     // 同时更新缓存
     wx.setStorageSync('posts_collected', postsCollected)
     // 同时更新收藏数据
@@ -222,8 +218,7 @@ Page({
    * @param postsCollected
    * @param postCollected
    */
-  showModel: function(postsCollected, isPostCollected) {
-    const that = this
+  showModel(postsCollected, isPostCollected) {
     wx.showModal({
       title: '收藏',
       content: isPostCollected ? '是否收藏该文章' : '是否取消收藏该文章',
@@ -232,13 +227,13 @@ Page({
       cancelColor: '#333',
       confirmText: '确认',
       confirmColor: '#405f80',
-      success: function(res) {
+      success: res => {
         if (res.confirm) {
           // 更新缓存
           wx.setStorageSync('posts_collected', postsCollected)
 
           // 更新变量数据 注意this指向
-          that.setData({
+          this.setData({
             isCollected: isPostCollected
           })
         }

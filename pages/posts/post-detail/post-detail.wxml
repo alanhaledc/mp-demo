@@ -1,26 +1,35 @@
 <view class="container">
-		<!-- 顶部图片 -->
-		<image class="head-image" src="{{isPlaying ? postData.music.coverImg : postData.headImgSrc}}" />
-		<!-- 播放音乐图标 -->
-		<image catchtap="onMusicTop" class="audio" src="{{isPlaying ? '/images/music/music-stop.png' : '/images/music/music-start.png'}}" />
-		<!-- 作者和时间栏 -->
-		<view class="author-date">
-				<image class="avatar" src="{{postData.avatar}}" />
-				<text class="author">{{postData.author}}</text>
-				<text class="const-text">发表于</text>
-				<text class="date">{{postData.dateTime}}</text>
-		</view>
-		<!-- 文章标题 -->
-		<text class="title">{{postData.title}}</text>
-		<!-- 文章收藏和分享栏 -->
-		<view class="tool">
-				<view class="circle-img">
-						<image wx:if="{{isCollected}}" catchtap="onCollectionTap" src="/images/icon/collection.png" />
-						<image wx:else catchtap="onCollectionTap" src="/images/icon/collection-anti.png" />
-						<image class="share-img" catchtap="onShareTap" src="/images/icon/share.png" />
-				</view>
-				<view class="horizon" />
-		</view>
-		<!-- 文章内容 -->
-		<text class="detail">{{postData.detail}}</text>
+  <!-- 顶部图片 -->
+  <image class="head-image" src="{{isPlaying ? postData.music.coverImg : postData.headImgSrc}}" />
+
+  <!-- 播放音乐图标 -->
+  <image
+    catchtap="playMusic"
+    class="audio"
+    src="{{isPlaying ? '/images/music/music-stop.png' : '/images/music/music-start.png'}}"
+  />
+
+  <!-- 作者和时间栏 -->
+  <view class="author-date">
+    <image class="avatar" src="{{postData.avatar}}" />
+    <text class="author">{{postData.author}}</text>
+    <text class="const-text">发表于</text>
+    <text class="date">{{postData.dateTime}}</text>
+  </view>
+
+  <!-- 文章标题 -->
+  <text class="title">{{postData.title}}</text>
+
+  <!-- 文章收藏和分享栏 -->
+  <view class="tool">
+    <view class="circle-img">
+      <image wx:if="{{isCollected}}" catchtap="setPostCollection" src="/images/icon/collection.png" />
+      <image wx:else catchtap="setPostCollection" src="/images/icon/collection-anti.png" />
+      <image class="share-img" catchtap="showPost" src="/images/icon/share.png" />
+    </view>
+    <view class="horizon" />
+  </view>
+
+  <!-- 文章内容 -->
+  <text class="detail">{{postData.detail}}</text>
 </view>

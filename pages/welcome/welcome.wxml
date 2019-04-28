@@ -1,6 +1,10 @@
 <view class="container">
   <image class="user-avatar" src="/images/avatar.png"></image>
-  <text class="user-nane">Hello，<text style="color:#f00">风华</text></text>
+  <text class="user-nane">
+    Hello，<text style="color:#f00">
+      风华
+    </text>
+  </text>
   <view class="moto-container" bindtap="onTap">
     <text class="moto">开启小程序之旅</text>
   </view>

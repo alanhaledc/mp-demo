@@ -1,6 +1,6 @@
 const app = getApp()
 const doubanBase = app.globalData.g_doubanBase
-const util = require('../../utils/util.js')
+const util = require('../../../utils/util.js')
 
 Page({
   data: {
@@ -13,7 +13,7 @@ Page({
     isSearchPanelShow: false
   },
 
-  onLoad: function() {
+  onLoad() {
     const inTheatersUrl = `${doubanBase}/v2/movie/in_theaters?start=0&count=3`
     const comingSoonUrl = `${doubanBase}/v2/movie/coming_soon?start=0&count=3`
     const top250Url = `${doubanBase}/v2/movie/top250?start=0&count=3`
@@ -26,28 +26,27 @@ Page({
    * 获取电影数据
    * @param url
    */
-  getMovieListData: function(url, keyStr, type) {
-    const that = this
+  getMovieListData(url, keyStr, type) {
     wx.request({
       url: url,
       method: 'GET',
       header: {
         'Content-Type': 'json'
       },
-      success: function(res) {
-        that.processDoubanData(res.data, keyStr, type)
+      success: res => {
+        this.processDoubanData(res.data, keyStr, type)
       },
-      fail: function(error) {
+      fail: error => {
         console.log(error)
       }
     })
   },
 
   /**
-   * 提取数据
+   * 处理电影数据
    * @param data
    */
-  processDoubanData: function(data, keyStr, type) {
+  processDoubanData(data, keyStr, type) {
     let movies = []
     let subject
     let title
@@ -70,7 +69,6 @@ Page({
     }
     let readyData = {}
     readyData[keyStr] = {
-      // 三种类型对象下面设置成相同的key值-movies，在movies用扩展符展开，然后在movie-list遍历时名字都是movies
       movies: movies,
       type: type
     }
@@ -78,31 +76,10 @@ Page({
   },
 
   /**
-   * 跳转到更多页面
-   * @param e
-   */
-  onMoreTap: function(e) {
-    const type = e.currentTarget.dataset.type
-    wx.navigateTo({
-      url: `/pages/movies/more-movies/more-movies?type=${type}`
-    })
-  },
-
-  /**
-   * 跳转到电影详情页
-   */
-  onMovieTap: function(e) {
-    const movieId = e.currentTarget.dataset.movieid
-    wx.navigateTo({
-      url: `/pages/movies/movie-detail/movie-detail?id=${movieId}`
-    })
-  },
-
-  /**
    * 搜索输入聚焦触发
    * @param e
    */
-  onBindFocus: function() {
+  onBindFocus() {
     this.setData({
       isContainerShow: false,
       isSearchPanelShow: true
@@ -113,7 +90,7 @@ Page({
    * 搜索输入后确认触发
    * @param e
    */
-  onBindConfirm: function(e) {
+  onBindConfirm(e) {
     let text = e.detail.value
     // 搜索url
     const searchUrl = `${doubanBase}/v2/movie/search?q=${text}`
@@ -121,9 +98,9 @@ Page({
   },
 
   /**
-   * 关闭搜索栏
+   * 关闭搜索结果
    */
-  onCancelImgTap: function() {
+  closeSearchResult() {
     this.setData({
       isContainerShow: true,
       isSearchPanelShow: false,
