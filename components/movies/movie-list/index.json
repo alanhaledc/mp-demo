@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "movie-item": "/components/movies/movie-item/index"
+  }
+}

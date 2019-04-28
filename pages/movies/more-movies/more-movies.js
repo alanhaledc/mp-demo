@@ -10,7 +10,7 @@ Page({
     isEmpty: true
   },
 
-  onLoad: function(options) {
+  onLoad(options) {
     const type = options.type
 
     // 动态设置导航栏标题
@@ -38,9 +38,10 @@ Page({
   },
 
   /**
-   * 页面上拉触底事件的处理函数(页面下拉刷新和组件scroll-view冲突，加载更多改用事件触发)
+   * 页面上拉触底事件的处理函数
+   * 页面下拉刷新和组件 scroll-view 冲突，加载更多改用事件触发
    */
-  onReachBottom: function() {
+  onReachBottom() {
     this.onScrollLower()
   },
 
@@ -48,12 +49,11 @@ Page({
    * 提取数据
    * @param data
    */
-  processDoubanData: function(data) {
+  processDoubanData(data) {
     let movies = []
     let subject
     let title
     let temp
-    const that = this
 
     for (let key in data.subjects) {
       subject = data.subjects[key]
@@ -86,7 +86,7 @@ Page({
     }
     this.setData({
       movies: totalMovies,
-      totalCount: that.data.totalCount + 20
+      totalCount: this.data.totalCount + 20
     })
 
     // 数据加载成功后隐藏导航条加载动画
@@ -96,7 +96,7 @@ Page({
   /**
    * 滚动到底部时加载更多数据
    */
-  onScrollLower: function() {
+  onScrollLower() {
     let nextUrl = `${this.data.requestUrl}?start=${
       this.data.totalCount
     }&count=20`
@@ -108,7 +108,7 @@ Page({
   /**
    * 下拉刷新调用函数(同时显示下拉动画)
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh() {
     let refreshUrl = `${this.data.requestUrl}?start=0&count=20`
     // 清空原有数据
     this.setData({
@@ -118,15 +118,5 @@ Page({
     util.http(refreshUrl, this.processDoubanData)
     // 请求数据成功后停止下拉动画
     wx.stopPullDownRefresh()
-  },
-
-  /**
-   * 跳转到电影详情页
-   */
-  onMovieTap: function(e) {
-    const movieId = e.currentTarget.dataset.movieid
-    wx.navigateTo({
-      url: `/pages/movies/movie-detail/movie-detail?id=${movieId}`
-    })
   }
 })

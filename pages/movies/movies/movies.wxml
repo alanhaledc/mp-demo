@@ -1,0 +1,35 @@
+<!-- 搜索栏 -->
+<view class="search">
+  <icon class="search-img" type="search" size="13" color="#405f80" />
+  <input
+    type="text"
+    placeholder="头号玩家、复仇者联盟3"
+    placeholder-class="placeholder"
+    bindfocus="onBindFocus"
+    bindconfirm="onBindConfirm"
+  />
+  <image
+    src="/images/icon/xx.png"
+    class="xx-img"
+    bindtap="closeSearchResult"
+    wx:if="{{isSearchPanelShow}}"
+  ></image>
+</view>
+
+<!-- 电影列表 -->
+<view class="container" wx:if="{{isContainerShow}}">
+  <view class="movies-template">
+    <movie-list movies="{{inTheaters.movies}}" type="{{inTheaters.type}}" />
+  </view>
+  <view class="movies-template">
+    <movie-list movies="{{comingSoon.movies}}" type="{{comingSoon.type}}" />
+  </view>
+  <view class="movies-template">
+    <movie-list movies="{{top250.movies}}" type="{{top250.type}}" />
+  </view>
+</view>
+
+<!-- 搜索结果-电影列表 -->
+<view class="search-panel" wx:if="{{isSearchPanelShow}}">
+  <movie-grid movies="{{searchResult.movies}}" />
+</view>

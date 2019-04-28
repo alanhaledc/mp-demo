@@ -1,0 +1,25 @@
+<view>
+  <!-- 轮播图 -->
+  <swiper
+    catchtap="goPostDetailPageFromSwiper"
+    indicator-dots="333"
+    indicator-active-color="#fff"
+    autoplay="true"
+    interval="2000"
+    circular="true"
+    vertical="{{false}}"
+  >
+    <block wx:for="{{swiperList}}" wx:key="swiperItem">
+      <swiper-item>
+        <image src="{{item.imgSrc}}" data-post-id="{{item.postId}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+  
+  <!-- 文章列表 -->
+  <block wx:for="{{postList}}" wx:key="postItem">
+    <view catchtap="goPostDetailPage" data-post-id="{{item.postId}}">
+      <post-item post="{{item}}" />
+    </view>
+  </block>
+</view>

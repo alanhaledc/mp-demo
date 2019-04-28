@@ -7,7 +7,7 @@ Page({
     movie: {}
   },
 
-  onLoad: function(options) {
+  onLoad(options) {
     const movieId = options.id
     const detailUrl = `${doubanBase}/v2/movie/subject/${movieId}`
     util.http(detailUrl, this.processDoubanData)
@@ -17,7 +17,7 @@ Page({
    * 提取数据
    * @param data
    */
-  processDoubanData: function(data) {
+  processDoubanData(data) {
     // 导演字段处理
     let director = {
       avatar: '',
@@ -60,8 +60,9 @@ Page({
    * 图片预览(电影海报和影人)
    * @param e
    */
-  viewMoviePostImg: function(e) {
+  viewMoviePostImg(e) {
     const url = e.currentTarget.dataset.src
+
     wx.previewImage({
       current: url,
       urls: [url]

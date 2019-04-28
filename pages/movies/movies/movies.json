@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "电影",
+  "usingComponents": {
+    "movie-list": "/components/movies/movie-list/index",
+    "movie-grid": "/components/movies/movie-grid/index"
+  }
+}
