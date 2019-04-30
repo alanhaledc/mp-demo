@@ -1,12 +1,23 @@
-const postsData = require('../../../data/posts-data.js')
-// 获取全局 App
 const app = getApp()
+
+const db = wx.cloud.database()
+let postsData
+db.collection('posts')
+  .get()
+  .then(res => {
+    postsData = res.data[0]
+  })
 
 Page({
   data: {
     isPlaying: false,
     currentPostId: null,
-    postData: {}
+    postData: {},
+    isCollected: false,
+    musicStopIconUrl:
+      'cloud://test1-81dcef.7465-test1-81dcef/images/music/music-stop.png',
+    musicStartIconUrl:
+      'cloud://test1-81dcef.7465-test1-81dcef/images/music/music-start.png'
   },
 
   onLoad(options) {
@@ -135,16 +146,12 @@ Page({
 
     // 取得当前页面文章收藏数据(是否收藏)
     let isPostCollected = postsCollected[this.data.currentPostId]
+    console.log(isPostCollected)
 
-    // 点击后需要取反(收藏变不收藏，不收藏变收藏)
     isPostCollected = !isPostCollected
 
     // 更新点击后的收藏状态
     postsCollected[this.data.currentPostId] = isPostCollected
-
-    // 交互
-    // 显示模态弹窗 不建议
-    // this.showModel(postsCollected, postCollected);
 
     // 显示消息提示框
     this.showToast(postsCollected, isPostCollected)
@@ -232,7 +239,7 @@ Page({
           // 更新缓存
           wx.setStorageSync('posts_collected', postsCollected)
 
-          // 更新变量数据 注意this指向
+          // 更新变量数据
           this.setData({
             isCollected: isPostCollected
           })

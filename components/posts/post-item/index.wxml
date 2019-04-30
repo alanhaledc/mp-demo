@@ -16,9 +16,9 @@
 
   <!-- 文章收藏和观看数量 -->
   <view class="post-like">
-    <image class="post-like-image" src="/images/icon/chat.png"></image>
+    <image class="post-like-image" src="{{chatIconUrl}}"></image>
     <text class="post-like-font">{{post.collection}}</text>
-    <image class="post-like-image" src="/images/icon/view.png"></image>
+    <image class="post-like-image" src="{{viewIconUrl}}"></image>
     <text class="post-like-font">{{post.reading}}</text>
   </view>
 </view>

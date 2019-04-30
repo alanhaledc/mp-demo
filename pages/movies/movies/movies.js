@@ -1,6 +1,9 @@
-const app = getApp()
-const doubanBase = app.globalData.g_doubanBase
+const baseCloudPath = getApp().globalData.baseCloudPath
 const util = require('../../../utils/util.js')
+wx.cloud.init({
+  traceUser: true
+})
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -10,36 +13,30 @@ Page({
     top250: {},
     searchResult: {},
     isContainerShow: true,
-    isSearchPanelShow: false
+    isSearchPanelShow: false,
+    xxIconUrl: baseCloudPath + '/images/icon/xx.png'
   },
 
   onLoad() {
-    const inTheatersUrl = `${doubanBase}/v2/movie/in_theaters?start=0&count=3`
-    const comingSoonUrl = `${doubanBase}/v2/movie/coming_soon?start=0&count=3`
-    const top250Url = `${doubanBase}/v2/movie/top250?start=0&count=3`
-    this.getMovieListData(inTheatersUrl, 'inTheaters', '正在热映')
-    this.getMovieListData(comingSoonUrl, 'comingSoon', '即将上映')
-    this.getMovieListData(top250Url, 'top250', '豆瓣Top250')
+    const inTheatersQuery = { in_theaters: true }
+    const comingSoonQuery = { coming_soon: true }
+    const top250Query = { top250: true }
+    this.getMovieListData(inTheatersQuery, 'inTheaters', '正在热映')
+    this.getMovieListData(comingSoonQuery, 'comingSoon', '即将上映')
+    this.getMovieListData(top250Query, 'top250', '豆瓣Top250')
   },
 
   /**
    * 获取电影数据
    * @param url
    */
-  getMovieListData(url, keyStr, type) {
-    wx.request({
-      url: url,
-      method: 'GET',
-      header: {
-        'Content-Type': 'json'
-      },
-      success: res => {
+  getMovieListData(query, keyStr, type) {
+    db.collection('movies')
+      .where(query)
+      .get()
+      .then(res => {
         this.processDoubanData(res.data, keyStr, type)
-      },
-      fail: error => {
-        console.log(error)
-      }
-    })
+      })
   },
 
   /**
@@ -51,8 +48,8 @@ Page({
     let subject
     let title
 
-    for (let key in data.subjects) {
-      subject = data.subjects[key]
+    for (let key in data) {
+      subject = data[key]
       title = subject.title
       if (title.length >= 0) {
         title = title.substring(0, 6) + '...'
@@ -67,6 +64,29 @@ Page({
       }
       movies.push(temp)
     }
+
+    // 有类型的只取 3 个
+    if (type) {
+      movies = movies.slice(0, 3)
+    }
+
+    // 搜索去重
+    if (keyStr === 'searchResult') {
+      let idArr = [],
+        repeatIdIndexArr = []
+      for (let i = 0; i < movies.length; i++) {
+        if (!idArr.includes(movies[i].movieId)) {
+          idArr.push(movies[i].movieId)
+        } else {
+          repeatIdIndexArr.push(i)
+        }
+      }
+
+      repeatIdIndexArr.forEach(idx => {
+        movies.splice(idx, 1)
+      })
+    }
+
     let readyData = {}
     readyData[keyStr] = {
       movies: movies,
@@ -92,9 +112,13 @@ Page({
    */
   onBindConfirm(e) {
     let text = e.detail.value
-    // 搜索url
-    const searchUrl = `${doubanBase}/v2/movie/search?q=${text}`
-    this.getMovieListData(searchUrl, 'searchResult', '')
+    // 搜索
+    const searchQuery = {
+      title: db.RegExp({
+        regexp: text
+      })
+    }
+    this.getMovieListData(searchQuery, 'searchResult', '')
   },
 
   /**

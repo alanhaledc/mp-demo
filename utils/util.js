@@ -17,27 +17,6 @@ const formatStars = stars => {
 }
 
 /**
- * 网络请求
- * @param {string} url
- * @param cb
- */
-const http = (url, cb) => {
-  wx.request({
-    url: url,
-    method: 'GET',
-    header: {
-      'Content-Type': 'json'
-    },
-    success: function(res) {
-      cb(res.data)
-    },
-    fail: function(error) {
-      console.log(error)
-    }
-  })
-}
-
-/**
  * 处理演员
  * @param {Array} casts
  * @return {string}
@@ -68,7 +47,6 @@ const formatCastsInfo = casts => {
 
 module.exports = {
   formatStars,
-  http,
   formatCasts,
   formatCastsInfo
 }

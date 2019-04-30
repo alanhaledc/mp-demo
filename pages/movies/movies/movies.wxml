@@ -9,7 +9,7 @@
     bindconfirm="onBindConfirm"
   />
   <image
-    src="/images/icon/xx.png"
+    src="{{xxIconUrl}}"
     class="xx-img"
     bindtap="closeSearchResult"
     wx:if="{{isSearchPanelShow}}"

@@ -5,7 +5,7 @@
       <text class="slogan">{{type}}</text>
       <view catchtap="onMoreTap" class="more">
         <text class="more-text">更多</text>
-        <image class="more-img" src="/images/icon/arrow-right.png" />
+        <image class="more-img" src="{{arrowRightIconUrl}}" />
       </view>
     </view>
 

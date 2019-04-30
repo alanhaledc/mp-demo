@@ -6,5 +6,5 @@
   <text class="movie-title">{{movie.title}}</text>
 
   <!-- 电影评分 -->
-  <stars stars="{{movie.stars}}"></stars>
+  <stars stars="{{movie.stars}}" score="{{movie.average}}"></stars>
 </view>

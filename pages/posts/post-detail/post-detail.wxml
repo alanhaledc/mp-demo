@@ -1,13 +1,13 @@
 <view class="container">
   <!-- 顶部图片 -->
-  <image class="head-image" src="{{isPlaying ? postData.music.coverImg : postData.headImgSrc}}" />
+  <image hidden="{{!isPlaying}}" class="head-image" src="{{postData.music.coverImg}}" />
+  <image hidden="{{isPlaying}}" class="head-image" src="{{postData.headImgSrc}}" />
 
   <!-- 播放音乐图标 -->
-  <image
-    catchtap="playMusic"
-    class="audio"
-    src="{{isPlaying ? '/images/music/music-stop.png' : '/images/music/music-start.png'}}"
-  />
+  <!-- 使用 hidden 修复图标跳一下的 bug（现在数据不会本地的而是远程的） -->
+  <image hidden="{{!isPlaying}}" catchtap="playMusic" class="audio" src="{{ musicStopIconUrl}}" />
+
+  <image hidden="{{isPlaying}}" catchtap="playMusic" class="audio" src="{{musicStartIconUrl}}" />
 
   <!-- 作者和时间栏 -->
   <view class="author-date">
@@ -23,9 +23,22 @@
   <!-- 文章收藏和分享栏 -->
   <view class="tool">
     <view class="circle-img">
-      <image wx:if="{{isCollected}}" catchtap="setPostCollection" src="/images/icon/collection.png" />
-      <image wx:else catchtap="setPostCollection" src="/images/icon/collection-anti.png" />
-      <image class="share-img" catchtap="showPost" src="/images/icon/share.png" />
+      <!-- 使用 hidden 修复图标跳一下的 bug -->
+      <image
+        hidden="{{!isCollected}}"
+        catchtap="setPostCollection"
+        src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/collection.png"
+      />
+      <image
+        hidden="{{isCollected}}"
+        catchtap="setPostCollection"
+        src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/collection-anti.png"
+      />
+      <image
+        class="share-img"
+        catchtap="showPost"
+        src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/share.png"
+      />
     </view>
     <view class="horizon" />
   </view>

@@ -1,6 +1,5 @@
 const util = require('../../../utils/util.js')
-const app = getApp()
-const doubanBase = app.globalData.g_doubanBase
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -9,8 +8,16 @@ Page({
 
   onLoad(options) {
     const movieId = options.id
-    const detailUrl = `${doubanBase}/v2/movie/subject/${movieId}`
-    util.http(detailUrl, this.processDoubanData)
+
+    db.collection('movies')
+      .where({
+        id: Number(movieId)
+      })
+      .limit(1)
+      .get()
+      .then(res => {
+        this.processDoubanData(res.data[0])
+      })
   },
 
   /**

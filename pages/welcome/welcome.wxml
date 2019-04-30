@@ -1,5 +1,5 @@
 <view class="container">
-  <image class="user-avatar" src="/images/avatar.png"></image>
+  <image class="user-avatar" src="{{picCloudPath}}"></image>
   <text class="user-nane">
     Hello，<text style="color:#f00">
       风华

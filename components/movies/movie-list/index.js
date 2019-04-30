@@ -1,7 +1,12 @@
+const baseCloudPath = getApp().globalData.baseCloudPath
+
 Component({
   properties: {
     movies: Array,
     type: String
+  },
+  data: {
+    arrowRightIconUrl: baseCloudPath + '/images/icon/arrow-right.png'
   },
   methods: {
     onMoreTap() {

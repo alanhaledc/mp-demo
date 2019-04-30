@@ -1,4 +1,7 @@
-const postsData = require('../../../data/posts-data.js')
+wx.cloud.init({
+  traceUser: true
+})
+const db = wx.cloud.database()
 
 Page({
   data: {
@@ -7,15 +10,23 @@ Page({
   },
 
   onLoad(options) {
-    // 设置文章数据
-    this.setData({
-      postList: postsData.postList
+    wx.cloud.init({
+      traceUser: true
     })
+    db.collection('posts')
+      .get()
+      .then(res => {
+        const postsData = res.data[0]
+        // 设置文章数据
+        this.setData({
+          postList: postsData.postList
+        })
 
-    // 设置轮播图数据
-    this.setData({
-      swiperList: postsData.swiperList
-    })
+        // 设置轮播图数据
+        this.setData({
+          swiperList: postsData.swiperList
+        })
+      })
   },
 
   /**

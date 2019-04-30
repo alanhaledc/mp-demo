@@ -2,7 +2,7 @@
   <!--星星图片-->
   <view class="stars">
     <block wx:for="{{stars}}" wx:for-item="star" wx:key="star">
-      <image src="{{star ? '/images/icon/star.png': '/images/icon/none-star.png'}}" />
+      <image src="{{star ? starIconUrl: noneStatIconUrl}}" />
     </block>
   </view>
 
