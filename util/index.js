@@ -1,8 +1,5 @@
-/**
- * 将表示星星数的字符串转化为数组 '35' => [1,1,1,0,0] '50' => [1,1,1,1,1]
- * @param {string} stars
- * @return {Array}
- */
+// 将表示星星数的字符串转化为数组
+// e.g '35' => [1, 1, 1, 0 ,0] '50' => [1, 1, 1, 1, 1]
 const formatStars = stars => {
   const num = stars.substring(0, 1)
   let arr = []
@@ -16,11 +13,7 @@ const formatStars = stars => {
   return arr
 }
 
-/**
- * 处理演员
- * @param {Array} casts
- * @return {string}
- */
+// 规范演员
 const formatCasts = casts => {
   const temArr = []
   casts.forEach(item => {
@@ -29,11 +22,7 @@ const formatCasts = casts => {
   return temArr.join('/')
 }
 
-/**
- * 处理演员信息
- * @param {Array} casts
- * @return {Array}
- */
+// 规范演员信息
 const formatCastsInfo = casts => {
   const arr = []
   casts.forEach(item => {
