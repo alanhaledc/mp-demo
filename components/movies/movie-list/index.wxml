@@ -3,7 +3,7 @@
     <!--电影列表头部-->
     <view class="movie-head">
       <text class="slogan">{{type}}</text>
-      <view catchtap="onMoreTap" class="more">
+      <view catch:tap="onMoreTap" class="more">
         <text class="more-text">更多</text>
         <image class="more-img" src="{{arrowRightIconUrl}}" />
       </view>

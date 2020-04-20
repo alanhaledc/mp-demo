@@ -1,4 +1,4 @@
-<view class="movie-container" catchtap="onMovieTap">
+<view class="movie-container" catch:tap="onMovieTap">
   <!-- 电影海报 -->
   <image class="movie-img" src="{{movie.coverageUrl}}" />
 

@@ -5,7 +5,7 @@
       风华
     </text>
   </text>
-  <view class="moto-container" bindtap="onTap">
+  <view class="moto-container" bind:tap="jump">
     <text class="moto">开启小程序之旅</text>
   </view>
 </view>

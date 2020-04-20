@@ -5,9 +5,9 @@
 
   <!-- 播放音乐图标 -->
   <!-- 使用 hidden 修复图标跳一下的 bug（现在数据不会本地的而是远程的） -->
-  <image hidden="{{!isPlaying}}" catchtap="playMusic" class="audio" src="{{ musicStopIconUrl}}" />
+  <image hidden="{{!isPlaying}}" catch:tap="playMusic" class="audio" src="{{ musicStopIconUrl}}" />
 
-  <image hidden="{{isPlaying}}" catchtap="playMusic" class="audio" src="{{musicStartIconUrl}}" />
+  <image hidden="{{isPlaying}}" catch:tap="playMusic" class="audio" src="{{musicStartIconUrl}}" />
 
   <!-- 作者和时间栏 -->
   <view class="author-date">
@@ -26,17 +26,17 @@
       <!-- 使用 hidden 修复图标跳一下的 bug -->
       <image
         hidden="{{!isCollected}}"
-        catchtap="setPostCollection"
+        catch:tap="setPostCollection"
         src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/collection.png"
       />
       <image
         hidden="{{isCollected}}"
-        catchtap="setPostCollection"
+        catch:tap="setPostCollection"
         src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/collection-anti.png"
       />
       <image
         class="share-img"
-        catchtap="showPost"
+        catch:tap="showPost"
         src="cloud://test1-81dcef.7465-test1-81dcef/images/icon/share.png"
       />
     </view>

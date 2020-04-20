@@ -19,7 +19,7 @@
     class="movie-img"
     src="{{movie.movieImg}}"
     data-src="{{movie.movieImg}}"
-    catchtap="viewMoviePostImg"
+    catch:tap="viewMoviePostImg"
   />
 
   <!--电影相关内容-->
@@ -65,7 +65,7 @@
             class="cast-img"
             src="{{item.avatar}}"
             data-src="{{item.avatar}}"
-            catchtap="viewMoviePostImg"
+            catch:tap="viewMoviePostImg"
           />
           <text class="cast-name">{{item.name}}</text>
         </view>

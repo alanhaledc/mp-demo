@@ -1,7 +1,7 @@
 <view>
   <!-- 轮播图 -->
   <swiper
-    catchtap="goPostDetailPageFromSwiper"
+    catch:tap="goPostDetailPageFromSwiper"
     indicator-dots="333"
     indicator-active-color="#fff"
     autoplay="true"
@@ -18,7 +18,7 @@
 
   <!-- 文章列表 -->
   <block wx:for="{{postList}}" wx:key="postId">
-    <view catchtap="goPostDetailPage" data-post-id="{{item.postId}}">
+    <view catch:tap="goPostDetailPage" data-post-id="{{item.postId}}">
       <post-item post="{{item}}" />
     </view>
   </block>
