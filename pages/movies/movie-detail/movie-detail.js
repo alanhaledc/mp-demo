@@ -1,8 +1,9 @@
-const {
+import {
   formatStars,
   formatCasts,
   formatCastsInfo
-} = require('../../../util/index.js')
+} from '../../../util/index.js'
+
 const db = wx.cloud.database()
 
 Page({

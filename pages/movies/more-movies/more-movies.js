@@ -1,4 +1,5 @@
-const { formatStars } = require('../../../util/index.js')
+import { formatStars } from '../../../util/index.js'
+
 wx.cloud.init()
 const db = wx.cloud.database()
 let query = {}

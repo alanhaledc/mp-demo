@@ -1,6 +1,6 @@
 // 将表示星星数的字符串转化为数组
 // e.g '35' => [1, 1, 1, 0 ,0] '50' => [1, 1, 1, 1, 1]
-const formatStars = stars => {
+export const formatStars = stars => {
   const num = stars.substring(0, 1)
   let arr = []
   for (let i = 0; i < 5; i++) {
@@ -14,7 +14,7 @@ const formatStars = stars => {
 }
 
 // 规范演员
-const formatCasts = casts => {
+export const formatCasts = casts => {
   const temArr = []
   casts.forEach(item => {
     temArr.push(item.name)
@@ -23,7 +23,7 @@ const formatCasts = casts => {
 }
 
 // 规范演员信息
-const formatCastsInfo = casts => {
+export const formatCastsInfo = casts => {
   const arr = []
   casts.forEach(item => {
     const obj = {}
@@ -34,8 +34,8 @@ const formatCastsInfo = casts => {
   return arr
 }
 
-module.exports = {
-  formatStars,
-  formatCasts,
-  formatCastsInfo
-}
+// module.exports = {
+//   formatStars,
+//   formatCasts,
+//   formatCastsInfo
+// }

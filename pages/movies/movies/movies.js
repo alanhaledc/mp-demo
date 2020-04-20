@@ -1,5 +1,6 @@
+import { formatStars } from '../../../util/index.js'
+
 const baseCloudPath = getApp().globalData.baseCloudPath
-const { formatStars } = require('../../../util/index.js')
 wx.cloud.init({ traceUser: true })
 const db = wx.cloud.database()
 
