@@ -19,14 +19,14 @@
       {
         "pagePath": "pages/movies/movies/movies",
         "text": "电影",
-        "iconPath": "/images/tab/dianying.png",
-        "selectedIconPath": "/images/tab/dianying_hl.png"
+        "iconPath": "/images/tab/movie.png",
+        "selectedIconPath": "/images/tab/movie_hl.png"
       },
       {
         "pagePath": "pages/posts/posts/posts",
         "text": "文章",
-        "iconPath": "/images/tab/yuedu.png",
-        "selectedIconPath": "/images/tab/yuedu_hl.png"
+        "iconPath": "/images/tab/post.png",
+        "selectedIconPath": "/images/tab/post_hl.png"
       }
     ]
   },
