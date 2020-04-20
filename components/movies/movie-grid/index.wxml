@@ -1,6 +1,6 @@
 <!-- 搜索栏结果or电影列表 -->
 <view class="grid-container">
-  <block wx:for="{{movies}}" wx:for-item="movie" wx:key="movie-more">
+  <block wx:for="{{movies}}" wx:for-item="movie" wx:key="movieId">
     <view class="single-view-container">
       <movie-item movie="{{movie}}" />
     </view>

@@ -9,15 +9,15 @@
     circular="true"
     vertical="{{false}}"
   >
-    <block wx:for="{{swiperList}}" wx:key="swiperItem">
+    <block wx:for="{{swiperList}}" wx:key="postId">
       <swiper-item>
         <image src="{{item.imgSrc}}" data-post-id="{{item.postId}}"></image>
       </swiper-item>
     </block>
   </swiper>
-  
+
   <!-- 文章列表 -->
-  <block wx:for="{{postList}}" wx:key="postItem">
+  <block wx:for="{{postList}}" wx:key="postId">
     <view catchtap="goPostDetailPage" data-post-id="{{item.postId}}">
       <post-item post="{{item}}" />
     </view>

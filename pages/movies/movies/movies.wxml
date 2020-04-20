@@ -5,8 +5,8 @@
     type="text"
     placeholder="头号玩家、复仇者联盟3"
     placeholder-class="placeholder"
-    bindfocus="onBindFocus"
-    bindconfirm="onBindConfirm"
+    bindfocus="handleBindFocus"
+    bindconfirm="handleBindConfirm"
   />
   <image
     src="{{xxIconUrl}}"

@@ -1,6 +1,5 @@
 <view class="container">
   <!--电影头部海报(模糊效果)-->
-
   <image class="head-img" src="{{movie.movieImg}}" mode="aspectFill"></image>
 
   <!--电影头部海报上面的内容(覆盖在上面)-->
@@ -60,7 +59,7 @@
   <view class="cast">
     <text class="cast-font">影人</text>
     <scroll-view class="cast-imgs" scroll-x="true" style="width: 100%">
-      <block wx:for="{{movie.castsInfo}}" wx:key="item.avatar">
+      <block wx:for="{{movie.castsInfo}}" wx:key="avatar">
         <view class="cast-container">
           <image
             class="cast-img"

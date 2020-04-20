@@ -11,7 +11,7 @@
 
     <!--电影列表内容-->
     <view class="movies-container">
-      <block wx:for="{{movies}}" wx:for-item="movie" wx:key="movie">
+      <block wx:for="{{movies}}" wx:for-item="movie" wx:key="movieId">
         <movie-item movie="{{movie}}" />
       </block>
     </view>
