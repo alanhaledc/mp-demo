@@ -1,13 +1,10 @@
 const baseCloudPath = getApp().globalData.baseCloudPath
-const util = require('../../../utils/util.js')
-wx.cloud.init({
-  traceUser: true
-})
+const { formatStars } = require('../../../util/index.js')
+wx.cloud.init({ traceUser: true })
 const db = wx.cloud.database()
 
 Page({
   data: {
-    // 三种类型
     inTheaters: {},
     comingSoon: {},
     top250: {},
@@ -26,23 +23,15 @@ Page({
     this.getMovieListData(top250Query, 'top250', '豆瓣Top250')
   },
 
-  /**
-   * 获取电影数据
-   * @param url
-   */
+  // 获取电影数据
   getMovieListData(query, keyStr, type) {
     db.collection('movies')
       .where(query)
       .get()
-      .then(res => {
-        this.processDoubanData(res.data, keyStr, type)
-      })
+      .then(res => this.processDoubanData(res.data, keyStr, type))
   },
 
-  /**
-   * 处理电影数据
-   * @param data
-   */
+  // 处理电影数据
   processDoubanData(data, keyStr, type) {
     let movies = []
     let subject
@@ -55,8 +44,7 @@ Page({
         title = title.substring(0, 6) + '...'
       }
       let temp = {
-        // 转化星星数为数组
-        stars: util.formatStars(subject.rating.stars),
+        stars: formatStars(subject.rating.stars),
         title: title,
         average: subject.rating.average,
         coverageUrl: subject.images.large,
@@ -95,40 +83,28 @@ Page({
     this.setData(readyData)
   },
 
-  /**
-   * 搜索输入聚焦触发
-   * @param e
-   */
-  onBindFocus() {
+  // 搜索输入聚焦触发
+  handleBindFocus() {
     this.setData({
       isContainerShow: false,
       isSearchPanelShow: true
     })
   },
 
-  /**
-   * 搜索输入后确认触发
-   * @param e
-   */
-  onBindConfirm(e) {
+  // 搜索输入后确认触发
+  handleBindConfirm(e) {
     let text = e.detail.value
-    // 搜索
     const searchQuery = {
-      title: db.RegExp({
-        regexp: text
-      })
+      title: db.RegExp({ regexp: text })
     }
     this.getMovieListData(searchQuery, 'searchResult', '')
   },
 
-  /**
-   * 关闭搜索结果
-   */
+  // 关闭搜索结果
   closeSearchResult() {
     this.setData({
       isContainerShow: true,
       isSearchPanelShow: false,
-      // 同时清空搜索数据
       searchResult: {}
     })
   }

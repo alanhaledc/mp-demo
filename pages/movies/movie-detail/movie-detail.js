@@ -1,4 +1,8 @@
-const util = require('../../../utils/util.js')
+const {
+  formatStars,
+  formatCasts,
+  formatCastsInfo
+} = require('../../../util/index.js')
 const db = wx.cloud.database()
 
 Page({
@@ -20,16 +24,11 @@ Page({
       })
   },
 
-  /**
-   * 提取数据
-   * @param data
-   */
+  // 提取数据
   processDoubanData(data) {
-    // 导演字段处理
-    let director = {
+    const director = {
       avatar: '',
       name: ''
-      // id:''
     }
 
     if (data.directors[0] !== null) {
@@ -37,7 +36,6 @@ Page({
         director.avatar = data.directors[0].avatars.large
       }
       director.name = data.directors[0].name
-      // director.id = data.directors[0].id
     }
 
     const movie = {
@@ -51,22 +49,17 @@ Page({
       commentCount: data.comments_count,
       year: data.year,
       genres: data.genres.join('、'),
-      stars: util.formatStars(data.rating.stars),
+      stars: formatStars(data.rating.stars),
       score: data.rating.average,
-      casts: util.formatCasts(data.casts),
-      castsInfo: util.formatCastsInfo(data.casts),
+      casts: formatCasts(data.casts),
+      castsInfo: formatCastsInfo(data.casts),
       summary: data.summary ? data.summary : '暂无简介'
     }
 
-    this.setData({
-      movie: movie
-    })
+    this.setData({ movie: movie })
   },
 
-  /**
-   * 图片预览(电影海报和影人)
-   * @param e
-   */
+  // 图片预览
   viewMoviePostImg(e) {
     const url = e.currentTarget.dataset.src
 
